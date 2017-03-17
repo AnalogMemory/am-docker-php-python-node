@@ -20,10 +20,9 @@ RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >
       python-paramiko \
       python-setuptools \
       python-pkg-resources \
-      python-pip
+      python-pip \
 
   # Standard cleanup.
-  && ln -f -s /usr/bin/nodejs /usr/bin/node \
   && update-ca-certificates \
   && apt-get autoremove -y \
   && apt-get clean \
