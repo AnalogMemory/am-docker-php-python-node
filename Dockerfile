@@ -20,13 +20,7 @@ RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >
       python-paramiko \
       python-setuptools \
       python-pkg-resources \
-      python-pip \
-
-  # Standard cleanup.
-  && update-ca-certificates \
-  && apt-get autoremove -y \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/man/?? /usr/share/man/??_*
+      python-pip
 
 # Install common PHP packages.
 RUN docker-php-ext-install \
@@ -36,11 +30,9 @@ RUN docker-php-ext-install \
       intl
 
 # Setup Ansible
-RUN mkdir /etc/ansible/ \
+RUN mkdir -p /etc/ansible/ \
     && echo '[local]\nlocalhost\n' > /etc/ansible/hosts \
-    && mkdir /opt/ansible/ \
-    && git clone http://github.com/ansible/ansible.git /opt/ansible/ansible \
-    && git submodule update --init
+    && pip install ansible
 
 # Composer installation.
 RUN curl -sS https://getcomposer.org/installer | php \
@@ -66,6 +58,11 @@ RUN curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash - \
 RUN mkdir ~/.ssh \
   && ssh-keyscan -H github.com >> ~/.ssh/known_hosts \
   && ssh-keyscan -H bitbucket.org >> ~/.ssh/known_hosts
+
+# Standard cleanup
+RUN apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/man/?? /usr/share/man/??_*
 
 # Show versions
 RUN php -v
