@@ -51,9 +51,18 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
     && mv wp-cli.phar /usr/local/bin/wp
 
 # Install Node (Latest)
-RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
-RUN apt-get update \
-    && apt-get install -y nodejs \
+RUN cd /tmp && \
+    wget http://nodejs.org/dist/node-latest.tar.gz && \
+    tar xvzf node-latest.tar.gz && \
+    rm -f node-latest.tar.gz && \
+    cd node-v* && \
+    ./configure && \
+    CXX="g++ -Wno-unused-local-typedefs" make && \
+    CXX="g++ -Wno-unused-local-typedefs" make install && \
+    cd /tmp && \
+    rm -rf /tmp/node-v* && \
+    npm install -g npm && \
+    echo '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /root/.bashrc
 
 # Add fingerprints for common sites.
 RUN mkdir ~/.ssh \
