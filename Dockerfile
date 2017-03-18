@@ -51,8 +51,8 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
     && mv wp-cli.phar /usr/local/bin/wp
 
 # Install Node (Latest)
-RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - \
-    && apt-get update
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
+RUN apt-get update \
     && apt-get install -y nodejs \
 
 # Add fingerprints for common sites.
