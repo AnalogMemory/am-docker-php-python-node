@@ -36,13 +36,7 @@ RUN mkdir -p /etc/ansible/ \
 
 # Composer installation.
 RUN curl -sS https://getcomposer.org/installer | php \
-  && mv composer.phar /usr/bin/composer \
-
-  # Standard cleanup.
-  && update-ca-certificates \
-  && apt-get autoremove -y \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+  && mv composer.phar /usr/bin/composer
 
 # Setup WP-CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
@@ -51,6 +45,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 
 # Install Node 7
 RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - \
+    && apt-get update
     && apt-get install -y nodejs \
     build-essential
 
@@ -61,6 +56,7 @@ RUN mkdir ~/.ssh \
 
 # Standard cleanup
 RUN apt-get autoremove -y \
+    && update-ca-certificates \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/man/?? /usr/share/man/??_*
 
