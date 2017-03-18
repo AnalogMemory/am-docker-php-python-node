@@ -1,4 +1,4 @@
-FROM php:7.0.8-cli
+FROM php:7.0-cli
 
 # Install requirements for standard builds.
 RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >> /etc/apt/sources.list \
