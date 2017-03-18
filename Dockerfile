@@ -50,7 +50,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
     && mv wp-cli.phar /usr/local/bin/wp
 
 # Install Node 7
-RUN curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash - \
+RUN curl -sL https://deb.nodesource.com/setup_7.x \
     && apt-get install -y nodejs \
     build-essential
 
