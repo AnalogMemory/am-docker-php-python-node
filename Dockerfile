@@ -51,24 +51,14 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
     && chmod +x wp-cli.phar \
     && mv wp-cli.phar /usr/local/bin/wp
 
-# Install Node (Latest)
-RUN cd /tmp && \
-    wget http://nodejs.org/dist/node-latest.tar.gz && \
-    tar xvzf node-latest.tar.gz && \
-    rm -f node-latest.tar.gz && \
-    cd node-v* && \
-    ./configure && \
-    CXX="g++ -Wno-unused-local-typedefs" make && \
-    CXX="g++ -Wno-unused-local-typedefs" make install && \
-    cd /tmp && \
-    rm -rf /tmp/node-v* && \
-    npm install -g npm && \
-    echo '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /root/.bashrc
+# Install Node 7.x
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
+RUN apt-get update && apt-get install -y nodejs
 
 # Install Yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install yarn
+RUN apt-get update && apt-get install -y yarn
 
 # Add fingerprints for common sites.
 RUN mkdir ~/.ssh \
