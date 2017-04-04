@@ -14,6 +14,7 @@ RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >
       git \
       libmcrypt-dev \
       libicu-dev \
+      libpng \
       python-yaml \
       python-jinja2 \
       python-httplib2 \
@@ -63,6 +64,11 @@ RUN cd /tmp && \
     rm -rf /tmp/node-v* && \
     npm install -g npm && \
     echo '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /root/.bashrc
+
+# Install Yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && apt-get install yarn
 
 # Add fingerprints for common sites.
 RUN mkdir ~/.ssh \
