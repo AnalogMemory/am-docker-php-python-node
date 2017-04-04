@@ -14,7 +14,7 @@ RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >
       git \
       libmcrypt-dev \
       libicu-dev \
-      libpng \
+      libpng-dev \
       python-yaml \
       python-jinja2 \
       python-httplib2 \
