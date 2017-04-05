@@ -52,7 +52,7 @@ RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >
   && mv wp-cli.phar /usr/local/bin/wp \
 
   # Install Node 7.x
-  && curl -sL https://deb.nodesource.com/setup_7.x | bash - \
+  && curl -vsL https://deb.nodesource.com/setup_7.x | bash - \
   && apt-get update \
   && apt-get install -yq nodejs \
 
