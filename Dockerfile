@@ -52,7 +52,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
     && mv wp-cli.phar /usr/local/bin/wp
 
 # Install Node 7.x
-RUN curl -sL https://deb.nodesource.com/setup | sudo bash - && \
+RUN curl -sL https://deb.nodesource.com/setup | bash - && \
     apt-get install -yq nodejs build-essential
 
 # fix npm - not the latest version installed by apt-get
@@ -60,7 +60,7 @@ RUN npm install -g npm
 
 # Install Yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update && apt-get install -yq yarn
 
 # Add fingerprints for common sites.
