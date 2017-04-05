@@ -52,8 +52,9 @@ RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >
   && mv wp-cli.phar /usr/local/bin/wp \
 
   # Install Node 7.x
-  && curl -sL https://deb.nodesource.com/setup | bash - \
-  && apt-get install -yq nodejs build-essential \
+  && curl -sL https://deb.nodesource.com/setup_7.x | bash - \
+  && apt-get update \
+  && apt-get install -yq nodejs \
 
   # fix npm - not the latest version installed by apt-get
   && npm install -g npm \
@@ -61,7 +62,8 @@ RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >
   # Install Yarn
   && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
   && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-  && apt-get update && apt-get install -yq yarn \
+  && apt-get update \
+  && apt-get install -yq yarn \
 
   # Add fingerprints for common sites.
   && mkdir ~/.ssh \
