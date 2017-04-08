@@ -4,25 +4,34 @@ FROM php:7.0-cli
 RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >> /etc/apt/sources.list \
   && apt-get update \
   && apt-get install --no-install-recommends -y \
-      build-essential \
-      curl \
-      apt-transport-https \
-      ca-certificates \
-      wget \
-      openssh-client \
-      bzip2 \
-      git \
-      libmcrypt-dev \
-      libicu-dev \
-      libpng-dev \
-      python-yaml \
-      python-jinja2 \
-      python-httplib2 \
-      python-keyczar \
-      python-paramiko \
-      python-setuptools \
-      python-pkg-resources \
-      python-pip \
+     curl \
+     apt-transport-https \
+     ca-certificates \
+  && curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
+  && echo "deb https://deb.nodesource.com/node_7.x jessie main" > /etc/apt/sources.list.d/nodesource.list \
+  && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+  && apt-get update \
+  && apt-get install --no-install-recommends -y \
+     openssh-client \
+     wget \
+     bzip2 \
+     git \
+     build-essential \
+     libmcrypt-dev \
+     libicu-dev \
+     libpng-dev \
+     python-yaml \
+     python-jinja2 \
+     python-httplib2 \
+     python-keyczar \
+     python-paramiko \
+     python-setuptools \
+     python-pkg-resources \
+     python-pip \
+     nodejs \
+     yarn \
+  && ln -f -s /usr/bin/nodejs /usr/bin/node \
 
   # Standard cleanup
   && apt-get autoremove -y \
@@ -45,25 +54,12 @@ RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >
   # Composer installation.
   && curl -sS https://getcomposer.org/installer | php \
   && mv composer.phar /usr/bin/composer \
+  && composer selfupdate \
 
   # Setup WP-CLI
   && curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
   && chmod +x wp-cli.phar \
   && mv wp-cli.phar /usr/local/bin/wp \
-
-  # Install Node 7.x
-  && curl -vsL https://deb.nodesource.com/setup_7.x | bash - \
-  && apt-get update \
-  && apt-get install -yq nodejs \
-
-  # fix npm - not the latest version installed by apt-get
-  && npm install -g npm \
-
-  # Install Yarn
-  && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-  && apt-get update \
-  && apt-get install -yq yarn \
 
   # Add fingerprints for common sites.
   && mkdir ~/.ssh \
