@@ -17,7 +17,9 @@ RUN apt-get update \
      build-essential \
      libmcrypt-dev \
      libicu-dev \
-     libpng-dev \
+     libmcrypt-dev \
+     libjpeg62-turbo-dev \
+     libpng12-dev \
      python-yaml \
      python-jinja2 \
      python-httplib2 \
@@ -26,6 +28,7 @@ RUN apt-get update \
      python-setuptools \
      python-pkg-resources \
      python-pip \
+     php7.0 \
      yarn \
 
   # Standard cleanup
