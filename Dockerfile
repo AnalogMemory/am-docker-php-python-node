@@ -3,7 +3,7 @@ FROM node:7
 # Repo for Yarn
 RUN apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg
 RUN echo "deb http://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-add-repository ppa:ondrej/php
+RUN add-apt-repository ppa:ondrej/php
 
 # Install requirements for standard builds.
 RUN apt-get update \
