@@ -1,18 +1,15 @@
-FROM php:7.0-cli
+FROM node:7
+
+# Repo for Yarn
+RUN apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg
+RUN echo "deb http://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
 # Install requirements for standard builds.
-RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >> /etc/apt/sources.list \
-  && apt-get update \
+RUN apt-get update \
   && apt-get install --no-install-recommends -y \
      curl \
      apt-transport-https \
      ca-certificates \
-  && curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
-  && echo "deb https://deb.nodesource.com/node_7.x jessie main" > /etc/apt/sources.list.d/nodesource.list \
-  && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-  && apt-get update \
-  && apt-get install --no-install-recommends -y \
      openssh-client \
      wget \
      bzip2 \
@@ -29,9 +26,7 @@ RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >
      python-setuptools \
      python-pkg-resources \
      python-pip \
-     nodejs \
      yarn \
-  && ln -f -s /usr/bin/nodejs /usr/bin/node \
 
   # Standard cleanup
   && apt-get autoremove -y \
