@@ -38,6 +38,8 @@ RUN apt-get update \
     python-setuptools \
     python-pkg-resources \
     python-pip \
+    unzip \
+    rsync \
     nodejs \
     yarn \
 
